@@ -2,12 +2,11 @@ package enterprise
 
 import (
 	"fmt"
-	"github.com/khorevaa/go-v8platform/marshaler"
-	"github.com/khorevaa/go-v8platform/types"
+	"github.com/v8platform/marshaler"
 	"strings"
 )
 
-var _ types.Command = (*Enterprise)(nil)
+const ENTERPRISE = "ENTERPRISE"
 
 type Enterprise struct {
 	DisableSplash          bool `v8:"/DisableSplash" json:"disable_splash"`
@@ -31,7 +30,7 @@ type Enterprise struct {
 }
 
 func (d Enterprise) Command() string {
-	return types.COMMAND_ENTERPRISE
+	return ENTERPRISE
 }
 
 func (d Enterprise) Check() error {
@@ -39,7 +38,7 @@ func (d Enterprise) Check() error {
 	return nil
 }
 
-func (e Enterprise) Values() *types.Values {
+func (e Enterprise) Values() []string {
 	v, _ := marshaler.Marshal(e)
 	return v
 
@@ -84,7 +83,7 @@ type ExecuteOptions struct {
 	Params     map[string]string `v8:"-" json:"-"`
 }
 
-func (e ExecuteOptions) Values() *types.Values {
+func (e ExecuteOptions) Values() []string {
 
 	if len(e.Params) > 0 {
 
